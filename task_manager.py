@@ -7,10 +7,11 @@ tasks = []
 def read_tasks():
     if os.path.exists('tasks.json'):
         with open('tasks.json', 'r') as f:
-            tasks = json.load(f)
-        return tasks
-    else:
-        return []
+            try:    
+                tasks = json.load(f)
+            except json.JSONDecodeError:
+                tasks = []
+    return tasks
 
 # save tasks to file
 def save_tasks(tasks):
