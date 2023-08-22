@@ -1,51 +1,55 @@
 import json
 import os
 
+tasks = []
+
 # import data from file
-def read_task():
-    if os.path.exists('task.json'):
-        with open('task.json', 'r') as f:
-            task = json.load(f)
-        return task
+def read_tasks():
+    if os.path.exists('tasks.json'):
+        with open('tasks.json', 'r') as f:
+            tasks = json.load(f)
+        return tasks
     else:
         return []
-    
-# save task to file
-def save_task(task):
-    with open('task.json', 'w') as f:
-        json.dump(task, f)
-        
+
+# save tasks to file
+def save_tasks(tasks):
+    with open('tasks.json', 'w') as f:
+        json.dump(tasks, f)
+
 # add task
-def add_task(task):
+def add_task():
     title = input("Task title: ")
     description = input("Task description: ")
-    newTask = {"title": title, "description": description}
-    task.append(newTask)
-    save_task(task)
+    new_task = {"title": title, "description": description}
+    tasks.append(new_task)
+    save_tasks(tasks)
     print("Task added successfully!")
-    
-# list task
-def list_task(task):
-    if not task:
-        print("No task found!")
+
+# list tasks
+def list_tasks():
+    if not tasks:
+        print("No tasks found!")
         return
     print("Task list:")
-    for index, task in enumerate(task, start=1):
-        print(f"{index+1}. {task['title']}")
-        
+    for index, task in enumerate(tasks, start=1):
+        print(f"{index}. {task['title']}")
+
 def main():
-    task = read_task()
+    global tasks
+    tasks = read_tasks()
     while True:
         print("\nCLI Task Manager")
         print("1. Add task")
-        print("2. List task")
+        print("2. List tasks")
         print("3. Exit")
         choice = input("Enter your choice: ")
         if choice == "1":
-            add_task(task)
+            add_task()
         elif choice == "2":
-            list_task(task)
+            list_tasks()
         elif choice == "3":
+            save_tasks(tasks)  # Save tasks before exiting
             print("Thank you for using CLI Task Manager!")
             break
         else:
