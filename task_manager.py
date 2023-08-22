@@ -42,10 +42,12 @@ def delete_task(tasks):
     print("Task list:")
     for index, task in enumerate(tasks, start=1):
         print(f"{index}. {task['title']}")
-    choice = int(input("Enter task number to delete: "))
-    if choice < 1 or choice > len(tasks):
-        print("Invalid task number!")
-        return
+    while True:
+        choice = int(input("Enter task number to delete: "))
+        if choice < 1 or choice > len(tasks):
+            print("Invalid task number!")
+        else:
+            break
     del tasks[choice - 1]
     save_tasks(tasks)
     print("Task deleted successfully!")
