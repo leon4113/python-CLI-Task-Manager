@@ -26,18 +26,22 @@ def add_task(tasks):
     save_tasks(tasks)
     print("Task added successfully!")
 
+def tasks_empty(tasks):
+    if not tasks:
+        print("Tasks is empty!")
+        return True
+    return False
+
 # list tasks
 def list_tasks(tasks):
-    if not tasks:
-        print("No tasks found!")
-        return
+    if tasks_empty(tasks):
+        return 
     print("Task list:")
     for index, task in enumerate(tasks, start=1):
         print(f"{index}. {task['title']}")
 
 def delete_task(tasks):
-    if not tasks:
-        print("Tasks is empty!")
+    if tasks_empty(tasks):
         return
     print("Task list:")
     for index, task in enumerate(tasks, start=1):
@@ -52,20 +56,44 @@ def delete_task(tasks):
     save_tasks(tasks)
     print("Task deleted successfully!")
 
+def update_task(tasks):
+    if tasks_empty(tasks):
+        return
+    print("Task list:")
+    for index, task in enumerate(tasks, start=1):
+        print(f"{index}. {task['title']}")
+    while True:
+        choice = int(input("Enter task number to update: "))
+        if choice < 1 or choice > len(tasks):
+            print("Invalid task number!")
+        else:
+            break
+    title = input("Task title: ")
+    description = input("Task description: ")
+    tasks[choice - 1]["title"] = title
+    tasks[choice - 1]["description"] = description
+    save_tasks(tasks)
+    print("Task updated successfully!")
+
 def main():
     tasks = read_tasks()
     while True:
         print("\nCLI Task Manager")
         print("1. Add task")
         print("2. List tasks")
-        print("3. Delete task")
-        print("4. Exit")
+        print("3. Update task")
+        print("4. Delete task")
+        print("5. Exit")
         choice = input("Enter your choice: ")
         if choice == "1":
             add_task(tasks)
         elif choice == "2":
             list_tasks(tasks)
+        elif choice == "3":
+            update_task(tasks)
         elif choice == "4":
+            delete_task(tasks)
+        elif choice == "5":
             save_tasks(tasks)  # Save tasks before exiting
             print("Thank you for using CLI Task Manager!")
             break
