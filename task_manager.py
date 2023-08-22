@@ -21,7 +21,8 @@ def save_tasks(tasks):
 def add_task(tasks):
     title = input("Task title: ")
     description = input("Task description: ")
-    new_task = {"title": title, "description": description}
+    status = "incomplete"
+    new_task = {"title": title, "description": description, "status": status}
     tasks.append(new_task)
     save_tasks(tasks)
     print("Task added successfully!")
@@ -36,10 +37,48 @@ def tasks_empty(tasks):
 def list_tasks(tasks):
     if tasks_empty(tasks):
         return 
+    while True:
+        choice = int(input("1. View tasks list\n2. View completed tasks\n3. View incomplete task\nEnter task number to view: "))
+        if choice < 1 or choice > 3:
+            print("Invalid task number!")
+        else:
+            break
+    
+    print("\nTask list:")
+    
+    if choice == 1:  
+        for index, task in enumerate(tasks, start=1):
+            print(f"{index}. {task['title']}, {task['description']}, {task['status']}")
+    elif choice == 2:
+        for index, task in enumerate(tasks, start=1):
+            if task["status"] == "complete":
+                print(f"{index}. {task['title']}")
+    elif choice == 3:
+        for index, task in enumerate(tasks, start=1):
+            if task["status"] == "incomplete":
+                print(f"{index}. {task['title']}")
+        
+def update_task(tasks):
+    if tasks_empty(tasks):
+        return
     print("Task list:")
     for index, task in enumerate(tasks, start=1):
         print(f"{index}. {task['title']}")
-
+    while True:
+        choice = int(input("Enter task number to update: "))
+        if choice < 1 or choice > len(tasks):
+            print("Invalid task number!")
+        else:
+            break
+    title = input("Task title: ")
+    description = input("Task description: ")
+    status = input("Task status: ")
+    tasks[choice - 1]["title"] = title
+    tasks[choice - 1]["description"] = description
+    tasks[choice - 1]["status"] = status
+    save_tasks(tasks)
+    print("Task updated successfully!") 
+    
 def delete_task(tasks):
     if tasks_empty(tasks):
         return
@@ -55,25 +94,6 @@ def delete_task(tasks):
     del tasks[choice - 1]
     save_tasks(tasks)
     print("Task deleted successfully!")
-
-def update_task(tasks):
-    if tasks_empty(tasks):
-        return
-    print("Task list:")
-    for index, task in enumerate(tasks, start=1):
-        print(f"{index}. {task['title']}")
-    while True:
-        choice = int(input("Enter task number to update: "))
-        if choice < 1 or choice > len(tasks):
-            print("Invalid task number!")
-        else:
-            break
-    title = input("Task title: ")
-    description = input("Task description: ")
-    tasks[choice - 1]["title"] = title
-    tasks[choice - 1]["description"] = description
-    save_tasks(tasks)
-    print("Task updated successfully!")
 
 def main():
     tasks = read_tasks()
