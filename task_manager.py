@@ -36,7 +36,7 @@ def list_tasks():
         print(f"{index}. {task['title']}")
 
 def main():
-    global tasks
+    global tasks 
     tasks = read_tasks()
     while True:
         print("\nCLI Task Manager")
