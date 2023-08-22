@@ -48,7 +48,7 @@ def list_tasks(tasks):
     
     if choice == 1:  
         for index, task in enumerate(tasks, start=1):
-            print(f"{index}. {task['title']}, {task['description']}, {task['status']}")
+            print(f"{index}. {task['title']}: {task['description']} ({task['status']})")
     elif choice == 2:
         for index, task in enumerate(tasks, start=1):
             if task["status"] == "complete":
