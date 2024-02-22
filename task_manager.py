@@ -86,11 +86,15 @@ def delete_task(tasks):
     for index, task in enumerate(tasks, start=1):
         print(f"{index}. {task['title']}")
     while True:
-        choice = int(input("Enter task number to delete: "))
-        if choice < 1 or choice > len(tasks):
-            print("Invalid task number!")
+        choice = input("Enter task number to delete: ")
+        if choice == "":
+            print("Invalid Input!")
         else:
-            break
+            choice = int(choice)
+            if choice < 1 or choice > len(tasks):
+                print("Invalid task number!")
+            else:
+                break
     del tasks[choice - 1]
     save_tasks(tasks)
     print("Task deleted successfully!")
@@ -118,7 +122,7 @@ def main():
             print("Thank you for using CLI Task Manager!")
             break
         else:
-            print("Invalid choice!")
+            print("Invalid choice!\n")
 
 if __name__ == "__main__":
     main()
